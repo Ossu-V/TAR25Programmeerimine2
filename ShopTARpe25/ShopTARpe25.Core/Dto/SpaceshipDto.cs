@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ShopTARpe25.Core.Domain
+namespace ShopTARpe25.Core.Dto
 {
-    public class Spaceship
+    //Dto class vahendab andmeid controlleri ja service classide vahel.
+    internal class SpaceshipDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

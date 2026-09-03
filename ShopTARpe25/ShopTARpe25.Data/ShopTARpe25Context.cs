@@ -9,5 +9,6 @@ namespace ShopTARpe25.Data
     {
         public ShopTARpe25Context(DbContextOptions<ShopTARpe25Context> options) : base(options)
         { }
+        //teha Core projekti alla Domain nimega kaust ja sinna class nimega Spaceship
     }
 }

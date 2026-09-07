@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ShopTARpe25.Core.Domain;
 
 namespace ShopTARpe25.Data
 {
@@ -9,6 +7,7 @@ namespace ShopTARpe25.Data
     {
         public ShopTARpe25Context(DbContextOptions<ShopTARpe25Context> options) : base(options)
         { }
-        //teha Core projekti alla Domain nimega kaust ja sinna class nimega Spaceship
+
+        public DbSet<Spaceship> Spaceships { get; set; }
     }
 }

@@ -4,8 +4,11 @@ using ShopTARpe25.Core.Dto;
 using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
 
+
 namespace ShopTARpe25.ApplicationServices.Services
 {
+
+
     public class SpaceshipServices : ISpaceshipServices
     {
         private readonly ShopTARpe25Context _context;
@@ -17,7 +20,6 @@ namespace ShopTARpe25.ApplicationServices.Services
         {
             _context = context;
         }
-
         public async Task<Spaceship> Create(SpaceshipDto dto)
         {
             Spaceship domain = new();
@@ -31,8 +33,10 @@ namespace ShopTARpe25.ApplicationServices.Services
             domain.CreatedAt = dto.CreatedAt;
             domain.ModifiedAt = dto.ModifiedAt;
 
-            //siia tuleb kood, mis salvestab domain objekti andmebaasi
-            //tuleb kasutada repository´d, mis on defineeritud Core projektis
+            //siia tuleb kood, mis salvestab domain
+            //objekti andmebaasi
+            //tuleb kasutada repository'd, mis
+            //on defineeritud Core projektis
             //konstruktori kaudu tuleb injectida repository
 
             await _context.Spaceships.AddAsync(domain);

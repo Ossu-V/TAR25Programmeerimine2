@@ -73,5 +73,39 @@ namespace ShopTARpe25.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //tuleb teha Details meetod
+        //see kutsub välja interfacest service meetodi
+
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            //meetodi kutsumine interfacest
+            var spaceship = await _spaceshipService.DetailsAsync(id);
+
+            //veakäsitlus
+            //suunab vaatele NotFound, kui andmeid ei ole
+            if(spaceship == null)
+            {
+                return NotFound();
+            }
+
+            //tuleb teha viewModel ja see siin välja kutsuda
+            //ära map-ida vm ja domain
+
+            var vm = new SpaceshipDetailsViewModel();
+
+            vm.Id = spaceship.Id;
+            vm.Name = spaceship.Name;
+            vm.Classification = spaceship.Classification;
+            vm.BuiltDate = spaceship.BuiltDate;
+            vm.Crew = spaceship.Crew;
+            vm.EnginePower = spaceship.EnginePower;
+            vm.CreatedAt = spaceship.CreatedAt;
+            vm.ModifiedAt = spaceship.ModifiedAt;
+
+            return View(vm);
+        }
     }
 }

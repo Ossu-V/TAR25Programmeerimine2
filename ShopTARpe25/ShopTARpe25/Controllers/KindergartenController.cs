@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopTARpe25.Core.Dto;
 using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
+using ShopTARpe25.Models.Kindergarten;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace ShopTARpe25.Controllers
         public IActionResult Index()
         {
             var result = _context.Kindergartens
-                .Select(x => new KindergartenDto
+                .Select(x => new KindergartenIndexViewModel
                 {
                     Id = x.Id,
                     GroupName = x.GroupName,
@@ -45,14 +46,23 @@ namespace ShopTARpe25.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View("Create");
+            var vm = new KindergartenCreateViewModel();
+            return View("Create", vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(KindergartenDto dto)
+        public async Task<IActionResult> Create(KindergartenCreateViewModel vm)
         {
             if (ModelState.IsValid)
             {
+                var dto = new KindergartenDto
+                {
+                    GroupName = vm.GroupName,
+                    ChildrenCount = vm.ChildrenCount,
+                    KindergartenName = vm.KindergartenName,
+                    TeacherName = vm.TeacherName
+                };
+
                 var result = await _kindergartenServices.Create(dto);
                 if (result != null)
                 {
@@ -60,7 +70,7 @@ namespace ShopTARpe25.Controllers
                 }
             }
 
-            return View(dto);
+            return View(vm);
         }
 
         [HttpGet]
@@ -72,7 +82,18 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            return View(kindergarten);
+            var vm = new KindergartenDetailsViewModel
+            {
+                Id = kindergarten.Id,
+                GroupName = kindergarten.GroupName,
+                ChildrenCount = kindergarten.ChildrenCount,
+                KindergartenName = kindergarten.KindergartenName,
+                TeacherName = kindergarten.TeacherName,
+                CreatedAt = kindergarten.CreatedAt,
+                UpdatedAt = kindergarten.UpdatedAt
+            };
+
+            return View(vm);
         }
 
         [HttpGet]
@@ -84,14 +105,35 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            return View(kindergarten);
+            var vm = new KindergartenUpdateViewModel
+            {
+                Id = kindergarten.Id,
+                GroupName = kindergarten.GroupName,
+                ChildrenCount = kindergarten.ChildrenCount,
+                KindergartenName = kindergarten.KindergartenName,
+                TeacherName = kindergarten.TeacherName,
+                CreatedAt = kindergarten.CreatedAt,
+                UpdatedAt = kindergarten.UpdatedAt
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(KindergartenDto dto)
+        public async Task<IActionResult> Update(KindergartenUpdateViewModel vm)
         {
             if (ModelState.IsValid)
             {
+                var dto = new KindergartenDto
+                {
+                    Id = vm.Id,
+                    GroupName = vm.GroupName,
+                    ChildrenCount = vm.ChildrenCount,
+                    KindergartenName = vm.KindergartenName,
+                    TeacherName = vm.TeacherName,
+                    CreatedAt = vm.CreatedAt
+                };
+
                 var result = await _kindergartenServices.Update(dto);
                 if (result != null)
                 {
@@ -99,7 +141,7 @@ namespace ShopTARpe25.Controllers
                 }
             }
 
-            return View(dto);
+            return View(vm);
         }
 
         [HttpGet]
@@ -111,7 +153,15 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            return View(kindergarten);
+            var vm = new KindergartenDeleteViewModel
+            {
+                Id = kindergarten.Id,
+                GroupName = kindergarten.GroupName,
+                KindergartenName = kindergarten.KindergartenName,
+                TeacherName = kindergarten.TeacherName
+            };
+
+            return View(vm);
         }
 
         [HttpPost, ActionName("Delete")]

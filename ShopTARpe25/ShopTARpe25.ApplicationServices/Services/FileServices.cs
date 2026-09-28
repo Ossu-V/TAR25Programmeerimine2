@@ -49,7 +49,7 @@ namespace ShopTARpe25.ApplicationServices.Services
                         file.CopyTo(fileStream);
 
                         //domaini teha FailToApi
-                        FileToApi
+                        //FileToApi
                     }
                 }
             }

@@ -1,0 +1,46 @@
+﻿@model ShopTARpe25.Core.Dto.KindergartenDto
+
+@{
+    ViewData["Title"] = "Create Kindergarten";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="my-4 fw-bold">Create Kindergarten</h2>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="GroupName" class="control-label fw-bold">Group Name</label>
+                    <input asp-for="GroupName" class="form-group form-control" />
+                    <span asp-validation-for="GroupName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ChildrenCount" class="control-label fw-bold">Children Count</label>
+                    <input asp-for="ChildrenCount" class="form-group form-control" type="number" />
+                    <span asp-validation-for="ChildrenCount" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="KindergartenName" class="control-label fw-bold">Kindergarten Name</label>
+                    <input asp-for="KindergartenName" class="form-group form-control" />
+                    <span asp-validation-for="KindergartenName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="TeacherName" class="control-label fw-bold">Teacher Name</label>
+                    <input asp-for="TeacherName" class="form-group form-control" />
+                    <span asp-validation-for="TeacherName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group my-4">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary mx-2">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

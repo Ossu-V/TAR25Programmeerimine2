@@ -42,6 +42,19 @@
         </div>
     </div>
 
+    See koht on failide üleslaadimise vorm
+   <div class="form-group row">
+        <label asp-for="Files" class="col-sm-2 col-form-label"> </label>
+        <div class="col-sm-5">
+            <input asp-for="Files" class="form-control" type="file" multiple />
+        </div>
+   </div>
+
+   @foreach (var file in Model.Image)
+   {
+       <partial name="Images" model="file" />
+   }
+
     <div class="form-group mt-3">
         <input type="submit" class="btn btn-success" value="Create" />
         <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back to list</a>

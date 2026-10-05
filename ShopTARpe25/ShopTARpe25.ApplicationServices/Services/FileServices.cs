@@ -40,7 +40,7 @@ namespace ShopTARpe25.ApplicationServices.Services
                     //sinna muutuja taha on vaja Path kombineerida
                     string uploadsFolder = Path.Combine(_webHost.ContentRootPath, "wwwroot", "multipleFileUpload");
                     //igale failile unikaalne Guid selle nime ette
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.Name;
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
                     //iga kord, kui faili laed ülesse, siis tehakse see väikesteks tükkideks

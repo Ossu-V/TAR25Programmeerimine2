@@ -1,6 +1,12 @@
 ﻿@model ShopTARpe25.Models.Spaceship.ImageViewModel
 
+@{
+    var photoPaths = "~/multipleFileUpload/";
+}
+
 <div class="form-group row col-sm-4-offset-2">
-    <div>@Model.FilePath</div>
-    <img src="@Model.FilePath" alr="Image" class="img-fluid" />
+    @* <div>@Model.FilePath</div> *@
+    <img src="@photoPaths" alr="Image" class="img-fluid" />
+    <br />
+
 </div>

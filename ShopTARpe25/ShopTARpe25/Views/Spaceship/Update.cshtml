@@ -42,7 +42,15 @@
                 <input asp-for="EnginePower" class="form-control" />
             </div>
         </div>
+        <br />
+
+        @foreach (var images in Model.Images)
+        {
+            <partial name="_Images" model="images" />
+            <br />
+        }
 
         <input asp-action="Update" asp-controller="spaceship" type="submit" class="btn btn-success" value="Update" />
+        <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back to list</a>
     </form>
 </div>

@@ -50,11 +50,6 @@
         </div>
    </div>
 
-   @foreach (var file in Model.Image)
-   {
-       <partial name="Images" model="file" />
-   }
-
     <div class="form-group mt-3">
         <input type="submit" class="btn btn-success" value="Create" />
         <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back to list</a>

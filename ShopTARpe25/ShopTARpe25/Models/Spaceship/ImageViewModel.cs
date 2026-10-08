@@ -1,4 +1,6 @@
-﻿namespace ShopTARpe25.Models.Spaceship
+﻿using ShopTARpe25.Core.Dto;
+
+namespace ShopTARpe25.Models.Spaceship
 {
     public class ImageViewModel
     {

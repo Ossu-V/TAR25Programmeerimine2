@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShopTARpe25.Core.Domain;
 using ShopTARpe25.Core.Dto;
@@ -14,6 +15,7 @@ namespace ShopTARpe25.Controllers
     {
         private readonly ISpaceshipServices _spaceshipService;
         private readonly ShopTARpe25Context _context;
+        private readonly IFileServices _fileService;
 
         //teha constructor et saaks kasutada teenust, mis on
         //defineeritud ISpaceshipServices liideses
@@ -21,11 +23,13 @@ namespace ShopTARpe25.Controllers
         public SpaceshipController
             (
                 ISpaceshipServices spaceshipService,
-                ShopTARpe25Context context
+                ShopTARpe25Context context,
+                IFileServices fileService
             )
         {
             _spaceshipService = spaceshipService;
             _context =  context;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
@@ -230,6 +234,26 @@ namespace ShopTARpe25.Controllers
             var result = await _spaceshipService.Delete(id);
 
             if (result == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
+        {
+            //tuleb ühendada dto ja viewModel, et saaks kasutada teenuse meetodit
+            var dto = new FileToApiDto()
+            {
+                Id = vm.ImageId
+            };
+
+            //kutsuda teenuse meetodit, mis kustutab pildid andmebaasist
+            var image = await _fileService.RemoveImagesFromApi(dto);
+
+            if (image == null)
             {
                 return RedirectToAction(nameof(Index));
             }

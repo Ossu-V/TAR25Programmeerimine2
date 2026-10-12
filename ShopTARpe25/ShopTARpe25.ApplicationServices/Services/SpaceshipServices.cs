@@ -76,6 +76,7 @@ namespace ShopTARpe25.ApplicationServices.Services
             spaceship.EnginePower = dto.EnginePower;
             spaceship.CreatedAt = dto.CreatedAt;
             spaceship.ModifiedAt = DateTime.Now;
+            _fileServices.FilesToApi(dto, spaceship);
 
             _context.Spaceships.Update(spaceship);
             await _context.SaveChangesAsync();
@@ -88,6 +89,16 @@ namespace ShopTARpe25.ApplicationServices.Services
             var result = await _context.Spaceships
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiDto
+                {
+                    Id = y.Id,
+                    SpaceshipId = y.SpaceshipId,
+                    ExistingFilePath = y.ExistingFilePath,
+                }).ToArrayAsync();
+
+            await _fileServices.RemoveImagesFromApi(images);
             _context.Spaceships.Remove(result);
             await _context.SaveChangesAsync();
 

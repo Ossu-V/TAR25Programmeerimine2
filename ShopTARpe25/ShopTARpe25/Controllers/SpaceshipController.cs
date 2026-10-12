@@ -171,6 +171,8 @@ namespace ShopTARpe25.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(SpaceshipUpdateViewModel vm)
         {
+
+
             var dto = new SpaceshipDto()
             {
                 Id = vm.Id,
@@ -180,7 +182,15 @@ namespace ShopTARpe25.Controllers
                 Crew = vm.Crew,
                 EnginePower = vm.EnginePower,
                 CreatedAt = vm.CreatedAt,
-                ModifiedAt = vm.ModifiedAt
+                ModifiedAt = vm.ModifiedAt,
+                Files = vm.Files,
+                FileToApiDtos = vm.Images
+                    .Select(file => new FileToApiDto
+                    {
+                        Id = file.ImageId,
+                        ExistingFilePath = file.FilePath,
+                        SpaceshipId = file.SpaceshipId
+                    }).ToArray()
             };
 
             var result = await _spaceshipService.Update(dto);
@@ -251,7 +261,7 @@ namespace ShopTARpe25.Controllers
             };
 
             //kutsuda teenuse meetodit, mis kustutab pildid andmebaasist
-            var image = await _fileService.RemoveImagesFromApi(dto);
+            var image = await _fileService.RemoveImageFromApi(dto);
 
             if (image == null)
             {

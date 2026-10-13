@@ -59,9 +59,24 @@ else
         </div>
    </div>
 
-    <div class="form-group mt-3">
-        <input type="submit" class="btn btn-success" value="Create" />
-        <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back to list</a>
+    <div>
+        @foreach (var images in Model.Image)
+            {
+                <partial name="_Images" model="images" />
+                <input asp-action="removeImage" asp-controller="spaceship" asp-route-imageId="@images.ImageId"
+                        type="submit" class="btn btn-danger" value="Remove Image" />
+            }
     </div>
+
+    @if (Model.Id.HasValue)
+    {
+        <input asp-action="update" asp-controller="Spaceship" type="submit" class="btn btn-success" value="Update" />
+    }
+    else
+    {
+        <input asp-action="create" asp-controller="Spaceship" type="submit" class="btn btn-success" value="Create" />
+    }
+
+    <a asp-action="Index" asp-controller="Spaceship" class="btn btn-success">Back to list</a>
 
 </form>

@@ -9,6 +9,6 @@ namespace ShopTARpe25.Core.ServiceInterface
         Task<KindergartenDto> Create(KindergartenDto dto);
         Task<KindergartenDto> Update(KindergartenDto dto);
         Task<KindergartenDto> Delete(Guid id);
-        Task<KindergartenDto> GetAsync(Guid id);
+        Task<KindergartenDto> Details(Guid id);
     }
 }

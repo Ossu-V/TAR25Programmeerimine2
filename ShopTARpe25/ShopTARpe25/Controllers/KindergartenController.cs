@@ -76,7 +76,7 @@ namespace ShopTARpe25.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var kindergarten = await _kindergartenServices.GetAsync(id);
+            var kindergarten = await _kindergartenServices.Details(id);
             if (kindergarten == null)
             {
                 return NotFound();
@@ -99,7 +99,7 @@ namespace ShopTARpe25.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var kindergarten = await _kindergartenServices.GetAsync(id);
+            var kindergarten = await _kindergartenServices.Details(id);
             if (kindergarten == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace ShopTARpe25.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var kindergarten = await _kindergartenServices.GetAsync(id);
+            var kindergarten = await _kindergartenServices.Details(id);
             if (kindergarten == null)
             {
                 return NotFound();

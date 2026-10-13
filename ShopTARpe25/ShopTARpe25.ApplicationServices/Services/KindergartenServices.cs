@@ -11,10 +11,17 @@ namespace ShopTARpe25.ApplicationServices.Services
     public class KindergartenServices : IKindergartenServices
     {
         private readonly ShopTARpe25Context _context;
+        private readonly IFileServices _fileServices;
 
-        public KindergartenServices(ShopTARpe25Context context)
+
+        public KindergartenServices
+            (
+                ShopTARpe25Context context,
+                IFileServices fileServices
+            )
         {
             _context = context;
+            _fileServices = fileServices;
         }
 
         public async Task<KindergartenDto> Create(KindergartenDto dto)
@@ -68,7 +75,7 @@ namespace ShopTARpe25.ApplicationServices.Services
             return null;
         }
 
-        public async Task<KindergartenDto> GetAsync(Guid id)
+        public async Task<KindergartenDto> Details(Guid id)
         {
             var result = await _context.Kindergartens
                 .FirstOrDefaultAsync(x => x.Id == id);

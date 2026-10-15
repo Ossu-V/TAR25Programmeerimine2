@@ -1,0 +1,8 @@
+﻿@model ShopTARpe25.Models.Kindergarten.ImageViewModel
+
+<img src="~/multipleFileUpload/@Model.FilePath" asp-append-version="true" alt="pilt" />
+
+<form asp-action="RemoveImage" method="post">
+    <input type="hidden" asp-for="ImageId" />
+    <button type="submit">Kustuta</button>
+</form>

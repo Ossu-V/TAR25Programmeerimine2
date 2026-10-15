@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace ShopTARpe25.Core.Dto
 {
@@ -11,6 +12,10 @@ namespace ShopTARpe25.Core.Dto
         public string TeacherName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public List<IFormFile> Files { get; set; }
+        public IEnumerable<FileToApiDto> FileToApiDtos { get; set; }
+            = new List<FileToApiDto>();
     }
 }
 

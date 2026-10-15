@@ -16,6 +16,7 @@ namespace ShopTARpe25
 
             builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>();
             builder.Services.AddScoped<IKindergartenServices, KindergartenServices>();
+            builder.Services.AddScoped<IFileServices, FileServices>();
 
 
             //selleks, et tuleb installida Microsoft.EntityFrameworkCore.SqlServer

@@ -11,5 +11,9 @@ namespace ShopTARpe25.Models.Kindergarten
         public string TeacherName { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public List<IFormFile> Files { get; set; }
+        public List<ImageViewModel> Images { get; set; }
+            = new List<ImageViewModel>();
     }
 }

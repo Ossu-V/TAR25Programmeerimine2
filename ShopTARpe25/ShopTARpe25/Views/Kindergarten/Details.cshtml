@@ -40,4 +40,10 @@
             </div>
         </div>
     </div>
+
+    @foreach (var images in Model.Images)
+    {
+        <partial name="_Images" model="images" />
+        <br />
+    }
 </div>

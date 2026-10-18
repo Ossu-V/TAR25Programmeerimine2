@@ -5,7 +5,7 @@
 namespace ShopTARpe25.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class KidnergartenIdToFiles : Migration
+    public partial class databaseFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -6,6 +6,7 @@ using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
 using ShopTARpe25.Models.Kindergarten;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -65,7 +66,7 @@ namespace ShopTARpe25.Controllers
                     ChildrenCount = vm.ChildrenCount,
                     KindergartenName = vm.KindergartenName,
                     TeacherName = vm.TeacherName,
-                    Files = vm.Files,
+                    Files = vm.Files?.GroupBy(f => f.FileName).Select(g => g.First()).ToList(),
                     FileToApiDtos = vm.Images?
                         .Select(file => new FileToApiDto
                         {
@@ -77,15 +78,21 @@ namespace ShopTARpe25.Controllers
 
                 var result = await _kindergartenServices.Create(dto);
 
-                if (result != null)
+                if (vm.Files != null && vm.Files.Count > 0)
                 {
-                    if (vm.Files != null && vm.Files.Count > 0)
-                    {
-                        _fileServices.FilesToApi(dto, new Kindergarten { Id = dto.Id });
-                    }
+                    var latestKindergarten = await _context.Kindergartens
+                        .OrderByDescending(x => x.CreatedAt)
+                        .FirstOrDefaultAsync();
 
-                    return RedirectToAction(nameof(Index));
+                    if (latestKindergarten != null)
+                    {
+                        dto.Id = latestKindergarten.Id;
+                        var kindergartenEntity = new Kindergarten { Id = latestKindergarten.Id };
+                        _fileServices.FilesToApi(dto, kindergartenEntity);
+                    }
                 }
+
+                return RedirectToAction(nameof(Index));
             }
 
             return View(vm);
@@ -172,7 +179,7 @@ namespace ShopTARpe25.Controllers
                     KindergartenName = vm.KindergartenName,
                     TeacherName = vm.TeacherName,
                     CreatedAt = vm.CreatedAt,
-                    Files = vm.Files,
+                    Files = vm.Files?.GroupBy(f => f.FileName).Select(g => g.First()).ToList(),
                     FileToApiDtos = vm.Images?
                         .Select(file => new FileToApiDto
                         {
@@ -224,32 +231,54 @@ namespace ShopTARpe25.Controllers
                 TeacherName = kindergarten.TeacherName
             };
 
+            vm.Images.AddRange(images);
+
             return View(vm);
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
+            var images = await _context.FileToApis.Where(x => x.KindergartenId == id).ToListAsync();
+
+            foreach (var img in images)
+            {
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "multipleFileUpload", img.ExistingFilePath);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                _context.FileToApis.Remove(img);
+            }
+
+            await _context.SaveChangesAsync();
             await _kindergartenServices.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
+        public async Task<IActionResult> RemoveImage(Guid imageId, Guid kindergartenId, string fromAction)
         {
-            var dto = new FileToApiDto()
-            {
-                Id = vm.ImageId
-            };
+            var image = await _context.FileToApis.FirstOrDefaultAsync(x => x.Id == imageId);
 
-            var image = await _fileServices.RemoveImageFromApi(dto);
-
-            if (image == null)
+            if (image != null)
             {
-                return RedirectToAction(nameof(Index));
+                string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "multipleFileUpload", image.ExistingFilePath);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                _context.FileToApis.Remove(image);
+                await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Index));
+            if (fromAction == "Delete")
+            {
+                return RedirectToAction(nameof(Delete), new { id = kindergartenId });
+            }
+
+            return RedirectToAction(nameof(Update), new { id = kindergartenId });
         }
     }
 }

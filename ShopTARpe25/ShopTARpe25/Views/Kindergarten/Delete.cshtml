@@ -21,6 +21,34 @@
                     <dd class="col-sm-8 mb-3">@Model.TeacherName</dd>
                 </dl>
 
+                <div class="form-group row mb-4 col-md-12">
+                    <label class="control-label fw-bold">Seotud pildid (klõpsa ükshaaval kustutamiseks):</label>
+                    <div class="d-flex flex-wrap gap-3 mt-2">
+                        @if (Model.Images != null && Model.Images.Any())
+                        {
+                            @foreach (var image in Model.Images)
+                            {
+                                <div class="text-center" style="margin-right: 15px; margin-bottom: 15px; display: inline-block;">
+                                    <img src="~/multipleFileUpload/@image.FilePath" style="width: 120px; height: 120px; object-fit: cover; border-radius: 4px; display: block; margin-bottom: 5px;" />
+                                    
+                                    <form asp-action="RemoveImage" method="post">
+                                        <input type="hidden" name="imageId" value="@image.ImageId" />
+                                        <input type="hidden" name="kindergartenId" value="@image.KindergartenId" />
+                                        <input type="hidden" name="fromAction" value="Delete" />
+                                        <button type="submit" class="btn btn-danger btn-sm w-100" onclick="return confirm('Kas soovid selle pildi päriselt kustutada?');">
+                                            Kustuta
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted">Pilte pole lisatud.</p>
+                        }
+                    </div>
+                </div>
+
                 <form asp-action="Delete" method="post">
                     <input type="hidden" asp-for="Id" />
                     <input type="submit" value="Delete" class="btn btn-danger" />
@@ -29,10 +57,4 @@
             </div>
         </div>
     </div>
-
-    @foreach (var images in Model.Images)
-    {
-        <partial name="_Images" model="images" />
-        <br />
-    }
 </div>

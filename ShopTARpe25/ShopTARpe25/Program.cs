@@ -40,6 +40,8 @@ namespace ShopTARpe25
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",

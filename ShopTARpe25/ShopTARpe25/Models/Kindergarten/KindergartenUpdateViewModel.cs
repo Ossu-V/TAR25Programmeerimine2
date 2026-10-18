@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace ShopTARpe25.Models.Kindergarten
 {
@@ -13,7 +15,6 @@ namespace ShopTARpe25.Models.Kindergarten
         public DateTime UpdatedAt { get; set; }
 
         public List<IFormFile> Files { get; set; }
-        public List<ImageViewModel> Images { get; set; }
-            = new List<ImageViewModel>();
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
     }
 }

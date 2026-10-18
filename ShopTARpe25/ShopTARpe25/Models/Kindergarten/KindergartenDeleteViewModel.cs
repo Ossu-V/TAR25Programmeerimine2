@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ShopTARpe25.Models.Kindergarten
 {
@@ -9,7 +10,6 @@ namespace ShopTARpe25.Models.Kindergarten
         public string KindergartenName { get; set; } = string.Empty;
         public string TeacherName { get; set; } = string.Empty;
 
-        public List<ImageViewModel> Images { get; set; }
-            = new List<ImageViewModel>();
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
     }
 }

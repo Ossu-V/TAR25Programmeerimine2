@@ -18,7 +18,6 @@ namespace ShopTARpe25.ApplicationServices.Services
             (
                 ShopTARpe25Context context,
                 IFileServices fileServices
-
             )
         {
             _context = context;

@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Author { get; set; }
         public int PublishedYear { get; set; }
-        public string IsAvailable { get; set; }
+        public bool IsAvailable { get; set; }
 
         public ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }

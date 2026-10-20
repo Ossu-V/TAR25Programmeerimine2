@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ShopTARpe25.Models.BookIndexViewModel>
+
+@{
+    ViewData["Title"] = "Raamatukogu";
+}
+
+<h1>Raamatukogu infosüsteem</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Lisa uus raamat</a>
+</p>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get" class="d-flex mb-2">
+            <input type="text" name="searchTitle" class="form-control me-2" placeholder="Otsi pealkirja järgi..." />
+            <button type="submit" class="btn btn-outline-primary">Otsi</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <form asp-action="Index" method="get" class="d-flex mb-2">
+            <input type="number" name="searchYear" class="form-control me-2" placeholder="Otsi aasta järgi..." />
+            <button type="submit" class="btn btn-outline-primary">Otsi</button>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Pealkiri</th>
+            <th>Autor</th>
+            <th>Aasta</th>
+            <th>Saadavus</th>
+            <th>Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.PublishedYear</td>
+                <td>@item.AvailabilityStatus</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <form asp-action="EditTitle" method="post" class="d-flex me-2">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="text" name="newTitle" class="form-control form-control-sm me-1" placeholder="Uus pealkiri" required />
+                            <button type="submit" class="btn btn-sm btn-warning">Muuda</button>
+                        </form>
+
+                        <form asp-action="Delete" method="post" onsubmit="return confirm('Oled kindel?');">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-danger">Kustuta</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

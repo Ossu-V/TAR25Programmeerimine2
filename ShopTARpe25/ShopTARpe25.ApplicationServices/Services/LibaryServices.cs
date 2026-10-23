@@ -28,7 +28,6 @@ namespace ShopTARpe25.ApplicationServices.Services
                 PublishedYear = dto.PublishedYear,
                 IsAvailable = true
             };
-
             _context.Books.Add(book);
             _context.SaveChanges();
         }

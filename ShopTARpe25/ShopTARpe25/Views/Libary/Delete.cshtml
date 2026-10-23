@@ -1,0 +1,51 @@
+﻿@model ShopTARpe25.Models.BookDeleteViewModel
+
+@{
+    ViewData["Title"] = "Kustuta raamat";
+}
+
+<h1>Kustuta raamat</h1>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    </div>
+}
+
+<h3>Oled kindel, et soovid selle raamatu andmebaasist kustutada?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Pealkiri
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Title
+        </dd>
+        <dt class="col-sm-2">
+            Autor
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Author
+        </dd>
+        <dt class="col-sm-2">
+            Ilmumisaasta
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PublishedYear
+        </dd>
+        <dt class="col-sm-2">
+            Saadavus
+        </dt>
+        <dd class="col-sm-10">
+            @Model.AvailabilityStatus
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" class="btn btn-danger">Kustuta lõplikult</button>
+        <a asp-action="Index" class="btn btn-secondary">Tühista ja tagasi</a>
+    </form>
+</div>

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ShopTARpe25.Models.BookIndexViewModel>
+
+@{
+    ViewData["Title"] = "Laenutuses olevad raamatud";
+}
+
+<h1>Laenutuses olevad raamatud</h1>
+
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>Pealkiri</th>
+            <th>Autor</th>
+            <th>Ilmumisaasta</th>
+            <th>Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.PublishedYear</td>
+                <td>
+                    <form asp-action="ReturnBook" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <button type="submit" class="btn btn-info btn-sm">Märgi tagastatuks</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Tagasi raamatute nimekirja</a>

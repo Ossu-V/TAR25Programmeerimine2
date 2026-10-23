@@ -45,8 +45,9 @@ namespace ShopTARpe25.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View("CreateBook");
         }
+
 
         [HttpPost]
         public IActionResult Create(BookCreateViewModel viewModel)
@@ -59,11 +60,9 @@ namespace ShopTARpe25.Controllers
                     Author = viewModel.Author,
                     PublishedYear = viewModel.PublishedYear
                 };
-
                 _libaryServices.AddBook(dto);
                 return RedirectToAction(nameof(Index));
             }
-
             return View(viewModel);
         }
 
@@ -91,7 +90,6 @@ namespace ShopTARpe25.Controllers
                 PublishedYear = book.PublishedYear,
                 AvailabilityStatus = book.IsAvailable ? "Saadaval" : "Laenutuses"
             };
-
             return View(viewModel);
         }
 
@@ -131,7 +129,6 @@ namespace ShopTARpe25.Controllers
                 PublishedYear = b.PublishedYear,
                 AvailabilityStatus = "Laenutuses"
             }).ToList();
-
             return View(viewModels);
         }
 
@@ -154,9 +151,101 @@ namespace ShopTARpe25.Controllers
             if (!string.IsNullOrEmpty(fullName) && !string.IsNullOrEmpty(email))
             {
                 _libaryServices.AddReader(fullName, email);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Readers));
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Readers()
+        {
+            var domainReaders = _libaryServices.GetAllReaders();
+            var viewModels = domainReaders.Select(r => new ReaderIndexViewModel
+            {
+                Id = r.Id,
+                FullName = r.FullName,
+                Email = r.Email
+            }).ToList();
+            return View(viewModels);
+        }
+
+        [HttpGet]
+        public IActionResult ReaderLoans(Guid id)
+        {
+            var reader = _libaryServices.GetAllReaders().FirstOrDefault(r => r.Id == id);
+            if (reader == null)
+            {
+                return NotFound();
+            }
+
+            var loans = _libaryServices.GetLoansByReader(id);
+            var viewModel = new ReaderLoansViewModel
+            {
+                ReaderName = reader.FullName,
+                Loans = loans.Select(l => new LoanItemViewModel
+                {
+                    Id = l.Id,
+                    BookTitle = l.Book != null ? l.Book.Title : "Tundmatu raamat",
+                    LoanDate = l.LoanDate,
+                    ReturnDate = l.ReturnDate,
+                    Status = l.ReturnDate.HasValue ? "Tagastatud" : "Käes"
+                }).ToList()
+            };
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult CreateLoan(Guid id)
+        {
+            var book = _libaryServices.GetAllBooks().FirstOrDefault(b => b.Id == id);
+            if (book == null || !book.IsAvailable)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.BookTitle = book.Title;
+            ViewBag.BookId = book.Id;
+            var readers = _libaryServices.GetAllReaders();
+            return View(readers);
+        }
+
+        [HttpPost]
+        public IActionResult CreateLoanConfirmed(Guid bookId, Guid readerId)
+        {
+            _libaryServices.CreateLoan(bookId, readerId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var book = _libaryServices.GetAllBooks().FirstOrDefault(b => b.Id == id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new BookEditViewModel
+            {
+                Id = book.Id,
+                Title = book.Title,
+                Author = book.Author,
+                PublishedYear = book.PublishedYear
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(BookEditViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _libaryServices.UpdateBookTitle(viewModel.Id, viewModel.Title);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(viewModel);
+        }
+
     }
 }

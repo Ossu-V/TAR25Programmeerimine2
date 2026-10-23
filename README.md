@@ -1,6 +1,7 @@
 Libary küsimused
 
 * Milline on DbContext-i ülesanne?
+  
   See on sild koodi ja andmebaasi vahel, mis vahendab päringuid, haldab ühendust ja salvestab     muudatused andmebaasi.
 
 * Miks ei ole hea paigutada kõiki andmebaasipäringuid otse kasutajaliidese koodi?

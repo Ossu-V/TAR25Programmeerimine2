@@ -6,9 +6,18 @@
 
 <h1>Raamatukogu infosüsteem</h1>
 
-<p>
+<div class="mb-3">
     <a asp-action="Create" class="btn btn-success">Lisa uus raamat</a>
-</p>
+    <a asp-action="CreateReader" class="btn btn-dark">Lisa uus lugeja</a>
+    <a asp-action="BorrowedBooks" class="btn btn-primary">Laenutuses olevad raamatupilud</a>
+</div>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    </div>
+}
 
 <div class="row mb-4">
     <div class="col-md-6">
@@ -51,10 +60,7 @@
                             <button type="submit" class="btn btn-sm btn-warning">Muuda</button>
                         </form>
 
-                        <form asp-action="Delete" method="post" onsubmit="return confirm('Oled kindel?');">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <button type="submit" class="btn btn-sm btn-danger">Kustuta</button>
-                        </form>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Kustuta</a>
                     </div>
                 </td>
             </tr>

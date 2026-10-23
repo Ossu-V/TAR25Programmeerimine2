@@ -1,11 +1,13 @@
-﻿namespace ShopTARpe25.Core.Domain
+﻿using System;
+using System.Collections.Generic;
+
+namespace ShopTARpe25.Core.Domain
 {
     public class Reader
     {
         public Guid Id { get; set; }
-        public string FullName { get; set; }
-        public string Email { get; set; }
-
+        public string FullName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public ICollection<Loan> Loans { get; set; } = new List<Loan>();
     }
 }

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ShopTARpe25.Models.ReaderIndexViewModel>
+
+@{
+    ViewData["Title"] = "Lugejad";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Lugejate nimekiri</h2>
+
+    <div class="d-flex gap-2 mb-4">
+        <a asp-action="CreateReader" class="btn btn-primary">Lisa uus lugeja</a>
+        <a asp-action="Index" class="btn btn-primary">Tagasi raamatute juurde</a>
+    </div>
+
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Lugeja nimi</th>
+                <th>E-posti aadress</th>
+                <th>Tegevused</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <a asp-action="ReaderLoans" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Vaata laenutusi</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

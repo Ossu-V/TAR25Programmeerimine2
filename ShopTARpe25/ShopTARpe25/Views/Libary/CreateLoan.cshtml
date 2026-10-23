@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ShopTARpe25.Core.Domain.Reader>
+
+@{
+    ViewData["Title"] = "Laenuta raamat";
+}
+
+<h1>Laenuta raamat: @ViewBag.BookTitle</h1>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        @if (!Model.Any())
+        {
+            <div class="alert alert-warning">Süsteemis pole lugejaid! Enne laenutamist loo lugeja.</div>
+            <a asp-action="CreateReader" class="btn btn-dark">Lisa uus lugeja</a>
+            <a asp-action="Index" class="btn btn-secondary">Tagasi</a>
+        }
+        else
+        {
+            <form asp-action="CreateLoanConfirmed" method="post">
+                <input type="hidden" name="bookId" value="@ViewBag.BookId" />
+                <div class="form-group mb-3">
+                    <label class="control-label">Vali lugeja:</label>
+                    <select name="readerId" class="form-select" required>
+                        <option value="">-- Vali lugeja --</option>
+                        @foreach (var reader in Model)
+                        {
+                            <option value="@reader.Id">@reader.FullName</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Kinnita laenutus</button>
+                    <a asp-action="Index" class="btn btn-secondary">Tühista</a>
+                </div>
+            </form>
+        }
+    </div>
+</div>

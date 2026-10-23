@@ -1,0 +1,46 @@
+﻿@model ShopTARpe25.Models.ReaderLoansViewModel
+
+@{
+    ViewData["Title"] = "Lugeja laenutused";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Lugeja @Model.ReaderName laenutused</h2>
+
+    <div class="mb-4">
+        <a asp-action="Readers" class="btn btn-primary">Tagasi lugejate juurde</a>
+    </div>
+
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Raamatu pealkiri</th>
+                <th>Laenutamise kuupäev</th>
+                <th>Tagastamise kuupäev</th>
+                <th>Staatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Loans.Any())
+            {
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Sellel lugejal pole ühtegi laenutust.</td>
+                </tr>
+            }
+            else
+            {
+                @foreach (var item in Model.Loans)
+                {
+                    <tr>
+                        <td>@item.BookTitle</td>
+                        <td>@item.LoanDate.ToShortDateString()</td>
+                        <td>@(item.ReturnDate.HasValue? item.ReturnDate.Value.ToShortDateString() : "-")</td>
+                        <td>
+                            @item.Status
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

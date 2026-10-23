@@ -4,33 +4,35 @@
     ViewData["Title"] = "Laenutuses olevad raamatud";
 }
 
-<h1>Laenutuses olevad raamatud</h1>
+<div class="container mt-4">
+    <h2 class="mb-4">Laenutuses olevad raamatud</h2>
 
-<table class="table mt-4">
-    <thead>
-        <tr>
-            <th>Pealkiri</th>
-            <th>Autor</th>
-            <th>Ilmumisaasta</th>
-            <th>Tegevused</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="table table-hover align-middle mb-4">
+        <thead>
             <tr>
-                <td>@item.Title</td>
-                <td>@item.Author</td>
-                <td>@item.PublishedYear</td>
-                <td>
-                    <form asp-action="ReturnBook" method="post">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="submit" class="btn btn-info btn-sm">Märgi tagastatuks</button>
-                    </form>
-                </td>
+                <th>Pealkiri</th>
+                <th>Autor</th>
+                <th>Ilmumisaasta</th>
+                <th>Tegevused</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.PublishedYear</td>
+                    <td>
+                        <form asp-action="ReturnBook" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit" class="btn btn-sm btn-success">Märgi tagastatuks</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<a asp-action="Index" class="btn btn-secondary">Tagasi raamatute nimekirja</a>
+    <a asp-action="Index" class="btn btn-primary">Tagasi raamatute nimekirja</a>
+</div>

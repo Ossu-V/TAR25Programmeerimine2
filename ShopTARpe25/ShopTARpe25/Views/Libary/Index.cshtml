@@ -4,66 +4,70 @@
     ViewData["Title"] = "Raamatukogu";
 }
 
-<h1>Raamatukogu infosüsteem</h1>
+<div class="container mt-4">
+    <h2 class="mb-4">Raamatukogu infosüsteem</h2>
 
-<div class="mb-3">
-    <a asp-action="Create" class="btn btn-success">Lisa uus raamat</a>
-    <a asp-action="CreateReader" class="btn btn-dark">Lisa uus lugeja</a>
-    <a asp-action="BorrowedBooks" class="btn btn-primary">Laenutuses olevad raamatupilud</a>
-</div>
-
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="alert alert-danger">
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="d-flex gap-2 mb-4">
+        <a asp-action="Create" class="btn btn-primary">Lisa uus raamat</a>
+        <a asp-action="CreateReader" class="btn btn-primary">Lisa uus lugeja</a>
+        <a asp-action="Readers" class="btn btn-primary">Vaata lugejaid</a>
+        <a asp-action="BorrowedBooks" class="btn btn-primary">Laenutuses olevad raamatud</a>
     </div>
-}
 
-<div class="row mb-4">
-    <div class="col-md-6">
-        <form asp-action="Index" method="get" class="d-flex mb-2">
-            <input type="text" name="searchTitle" class="form-control me-2" placeholder="Otsi pealkirja järgi..." />
-            <button type="submit" class="btn btn-outline-primary">Otsi</button>
-        </form>
-    </div>
-    <div class="col-md-6">
-        <form asp-action="Index" method="get" class="d-flex mb-2">
-            <input type="number" name="searchYear" class="form-control me-2" placeholder="Otsi aasta järgi..." />
-            <button type="submit" class="btn btn-outline-primary">Otsi</button>
-        </form>
-    </div>
-</div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger py-2">
+            @Html.ValidationSummary(false, "", new { @class = "text-danger m-0" })
+        </div>
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Pealkiri</th>
-            <th>Autor</th>
-            <th>Aasta</th>
-            <th>Saadavus</th>
-            <th>Tegevused</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <div class="row g-2 mb-4">
+        <div class="col-md-4">
+            <form asp-action="Index" method="get" class="d-flex gap-2">
+                <input type="text" name="searchTitle" class="form-control form-control-sm" placeholder="Otsi pealkirja järgi..." />
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Otsi</button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form asp-action="Index" method="get" class="d-flex gap-2">
+                <input type="number" name="searchYear" class="form-control form-control-sm" placeholder="Otsi aasta järgi..." />
+                <button type="submit" class="btn btn-sm btn-outline-secondary">Otsi</button>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-hover align-middle">
+        <thead>
             <tr>
-                <td>@item.Title</td>
-                <td>@item.Author</td>
-                <td>@item.PublishedYear</td>
-                <td>@item.AvailabilityStatus</td>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <form asp-action="EditTitle" method="post" class="d-flex me-2">
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <input type="text" name="newTitle" class="form-control form-control-sm me-1" placeholder="Uus pealkiri" required />
-                            <button type="submit" class="btn btn-sm btn-warning">Muuda</button>
-                        </form>
-
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Kustuta</a>
-                    </div>
-                </td>
+                <th>Pealkiri</th>
+                <th>Autor</th>
+                <th>Aasta</th>
+                <th>Saadavus</th>
+                <th>Tegevused</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Author</td>
+                    <td>@item.PublishedYear</td>
+                    <td>@item.AvailabilityStatus</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Muuda</a>
+
+                            @if (item.AvailabilityStatus == "Saadaval")
+                            {
+                                <a asp-action="CreateLoan" asp-route-id="@item.Id" class="btn btn-sm btn-success">Laenuta</a>
+                            }
+
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Kustuta</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

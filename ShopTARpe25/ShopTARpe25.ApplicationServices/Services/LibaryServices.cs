@@ -93,5 +93,40 @@ namespace ShopTARpe25.ApplicationServices.Services
             return _context.Books.ToList();
         }
 
+        public void AddReader(string fullName, string email)
+        {
+            var reader = new Reader
+            {
+                Id = Guid.NewGuid(),
+                FullName = fullName,
+                Email = email
+            };
+            _context.Readers.Add(reader);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Reader> GetAllReaders()
+        {
+            return _context.Readers.ToList();
+        }
+
+        public void CreateLoan(Guid bookId, Guid readerId)
+        {
+            var book = _context.Books.Find(bookId);
+            if (book != null && book.IsAvailable)
+            {
+                var loan = new Loan
+                {
+                    Id = Guid.NewGuid(),
+                    BookId = bookId,
+                    ReaderId = readerId,
+                    LoanDate = DateTime.Now,
+                    ReturnDate = null
+                };
+                book.IsAvailable = false;
+                _context.Loans.Add(loan);
+                _context.SaveChanges();
+            }
+        }
     }
 }

@@ -15,8 +15,9 @@ namespace ShopTARpe25.Core.ServiceInterface
         void UpdateBookTitle(Guid bookId, string newTitle);
         void ReturnBook(Guid loanId);
         void DeleteBook(Guid bookId);
-
         IEnumerable<Book> GetAllBooks();
-
+        void AddReader(string fullName, string email);
+        IEnumerable<Reader> GetAllReaders();
+        void CreateLoan(Guid bookId, Guid readerId);
     }
 }

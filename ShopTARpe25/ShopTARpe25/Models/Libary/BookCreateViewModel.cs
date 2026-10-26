@@ -1,9 +1,14 @@
-﻿namespace ShopTARpe25.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ShopTARpe25.Models
 {
     public class BookCreateViewModel
     {
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
+        [Required]
+        public string Title { get; set; }
+        [Required]
+        public string Author { get; set; }
+        [Required]
         public int PublishedYear { get; set; }
     }
 }

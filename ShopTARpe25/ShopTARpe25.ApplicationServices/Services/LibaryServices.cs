@@ -62,13 +62,16 @@ namespace ShopTARpe25.ApplicationServices.Services
             }
         }
 
-        public void ReturnBook(Guid loanId)
+        public void ReturnBook(Guid bookId)
         {
-            var loan = _context.Loans.Include(l => l.Book).FirstOrDefault(l => l.Id == loanId);
-            if (loan != null && loan.ReturnDate == null)
+            var loan = _context.Loans.Include(l => l.Book).FirstOrDefault(l => l.BookId == bookId && l.ReturnDate == null);
+            if (loan != null)
             {
                 loan.ReturnDate = DateTime.Now;
-                loan.Book.IsAvailable = true;
+                if (loan.Book != null)
+                {
+                    loan.Book.IsAvailable = true;
+                }
                 _context.SaveChanges();
             }
         }
@@ -78,10 +81,11 @@ namespace ShopTARpe25.ApplicationServices.Services
             var book = _context.Books.Include(b => b.Loans).FirstOrDefault(b => b.Id == bookId);
             if (book != null)
             {
-                if (book.Loans.Any(l => l.ReturnDate == null))
+                if (book.Loans != null && book.Loans.Any())
                 {
-                    throw new InvalidOperationException("Raamat on välja laenutatud!");
+                    _context.Loans.RemoveRange(book.Loans);
                 }
+
                 _context.Books.Remove(book);
                 _context.SaveChanges();
             }

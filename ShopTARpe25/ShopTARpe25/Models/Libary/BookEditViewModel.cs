@@ -1,12 +1,14 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopTARpe25.Models
 {
     public class BookEditViewModel
     {
         public Guid Id { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
+        [Required]
+        public string Title { get; set; }
+        public string Author { get; set; }
         public int PublishedYear { get; set; }
     }
 }

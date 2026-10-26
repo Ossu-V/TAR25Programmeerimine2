@@ -5,9 +5,9 @@ namespace ShopTARpe25.Models
     public class BookDeleteViewModel
     {
         public Guid Id { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Author { get; set; } = string.Empty;
+        public string Title { get; set; }
+        public string Author { get; set; }
         public int PublishedYear { get; set; }
-        public string AvailabilityStatus { get; set; } = string.Empty;
+        public string AvailabilityStatus { get; set; }
     }
 }

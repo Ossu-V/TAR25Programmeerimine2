@@ -1,73 +1,58 @@
 ﻿@model IEnumerable<ShopTARpe25.Models.BookIndexViewModel>
 
 @{
-    ViewData["Title"] = "Raamatukogu";
+    ViewData["Title"] = "Raamatud";
 }
 
-<div class="container mt-4">
-    <h2 class="mb-4">Raamatukogu infosüsteem</h2>
+<h1>Raamatute nimekiri</h1>
 
-    <div class="d-flex gap-2 mb-4">
-        <a asp-action="Create" class="btn btn-primary">Lisa uus raamat</a>
-        <a asp-action="CreateReader" class="btn btn-primary">Lisa uus lugeja</a>
-        <a asp-action="Readers" class="btn btn-primary">Vaata lugejaid</a>
-        <a asp-action="BorrowedBooks" class="btn btn-primary">Laenutuses olevad raamatud</a>
-    </div>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Lisa uus raamat</a>
+    <a asp-action="BorrowedBooks" class="btn btn-primary">Laenutuses olevad raamatud</a>
+    <a asp-action="Readers" class="btn btn-primary">Lugejad</a>
+</p>
 
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger py-2">
-            @Html.ValidationSummary(false, "", new { @class = "text-danger m-0" })
-        </div>
-    }
-
-    <div class="row g-2 mb-4">
+<form method="get" class="mb-3">
+    <div class="row">
         <div class="col-md-4">
-            <form asp-action="Index" method="get" class="d-flex gap-2">
-                <input type="text" name="searchTitle" class="form-control form-control-sm" placeholder="Otsi pealkirja järgi..." />
-                <button type="submit" class="btn btn-sm btn-outline-secondary">Otsi</button>
-            </form>
+            <input type="text" name="searchTitle" class="form-control" placeholder="Otsi pealkirja järgi..." />
         </div>
-        <div class="col-md-4">
-            <form asp-action="Index" method="get" class="d-flex gap-2">
-                <input type="number" name="searchYear" class="form-control form-control-sm" placeholder="Otsi aasta järgi..." />
-                <button type="submit" class="btn btn-sm btn-outline-secondary">Otsi</button>
-            </form>
+        <div class="col-md-3">
+            <input type="number" name="searchYear" class="form-control" placeholder="Otsi aasta järgi..." />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-outline-primary">Otsi</button>
         </div>
     </div>
+</form>
 
-    <table class="table table-hover align-middle">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Pealkiri</th>
+            <th>Autor</th>
+            <th>Aasta</th>
+            <th>Staatus</th>
+            <th>Tegevused</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>Pealkiri</th>
-                <th>Autor</th>
-                <th>Aasta</th>
-                <th>Saadavus</th>
-                <th>Tegevused</th>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.PublishedYear</td>
+                <td>@item.AvailabilityStatus</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning" style="background-color: orange; border-color: orange; color: white;">Muuda</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Kustuta</a>
+                    @if (item.AvailabilityStatus == "Saadaval")
+                    {
+                        <a asp-action="CreateLoan" asp-route-id="@item.Id" class="btn btn-sm btn-success">Laenuta</a>
+                    }
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Title</td>
-                    <td>@item.Author</td>
-                    <td>@item.PublishedYear</td>
-                    <td>@item.AvailabilityStatus</td>
-                    <td>
-                        <div class="d-flex gap-2">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Muuda</a>
-
-                            @if (item.AvailabilityStatus == "Saadaval")
-                            {
-                                <a asp-action="CreateLoan" asp-route-id="@item.Id" class="btn btn-sm btn-success">Laenuta</a>
-                            }
-
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Kustuta</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>

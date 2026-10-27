@@ -1,2 +1,25 @@
 ﻿body {
+    background-color: slategray;
+    padding: 100px;
+    padding-top: 25px;
+}
+
+.navbar {
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+.table td {
+    background-color: dimgray !important;
+    border: 2px solid black;
+}
+
+.btn {
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+img {
+    width: 100%;
+    height: auto;
 }

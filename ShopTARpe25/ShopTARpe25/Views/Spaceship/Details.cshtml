@@ -1,4 +1,5 @@
 ﻿@model ShopTARpe25.Models.Spaceship.SpaceshipDetailsViewModel
+<link rel="stylesheet" href="~/css/SpaceshipStyleSheet.css" />
 
 <h1>Details</h1>
 
@@ -53,7 +54,7 @@
             @Html.DisplayFor(model => model.ModifiedAt)
         </div>
     </dl>
-
+    
     @foreach(var images in Model.Images)
     {
         <partial name="_Images" model="images" />

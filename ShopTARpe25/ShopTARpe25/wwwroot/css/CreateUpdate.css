@@ -1,0 +1,115 @@
+﻿/* ===== VORM ===== */
+.form-container,
+.create-form,
+.update-form,
+form {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    padding: 32px;
+    max-width: 520px;
+    margin: 20px 0;
+}
+
+h1, h2 {
+    color: #f8fafc !important;
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+/* ===== VÄLJAD ===== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label,
+    label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #c7d2fe !important;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+.form-control,
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid rgba(148, 163, 184, 0.3);
+    border-radius: 10px;
+    font-size: 15px;
+    color: #f1f5f9 !important;
+    background: rgba(15, 23, 42, 0.6) !important;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+    .form-control:focus,
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: #818cf8;
+        background: rgba(15, 23, 42, 0.85) !important;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+    }
+
+/* ===== NUPUD ===== */
+.form-actions,
+.btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+input[type="submit"],
+.btn-primary,
+.btn-save {
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px;
+    padding: 11px 24px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
+    transition: all 0.2s ease;
+}
+
+    input[type="submit"]:hover,
+    .btn-primary:hover,
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
+    }
+
+a.btn-secondary,
+.btn-cancel,
+a[href*="Index"] {
+    background: rgba(71, 85, 105, 0.8) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(148, 163, 184, 0.3) !important;
+    border-radius: 10px;
+    padding: 11px 24px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+    a.btn-secondary:hover,
+    .btn-cancel:hover,
+    a[href*="Index"]:hover {
+        background: rgba(100, 116, 139, 0.9) !important;
+        color: white !important;
+    }

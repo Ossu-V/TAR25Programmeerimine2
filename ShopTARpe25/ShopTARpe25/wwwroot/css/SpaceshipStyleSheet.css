@@ -1,25 +1,52 @@
 ﻿body {
-    background-color: slategray;
-    padding: 100px;
-    padding-top: 25px;
-}
-
-.navbar {
-    border: 2px solid black;
-    border-radius: 8px;
-}
-
-.table td {
-    background-color: dimgray !important;
-    border: 2px solid black;
-}
-
-.btn {
-    border: 2px solid black;
-    border-radius: 8px;
-}
-
-img {
+    background-color: #f4f6f9;
+    font-family: 'segoe ui', tahoma, geneva, verdana, sans-serif;
+    color: #333;
+    
+    /* eemaldab vaikimisi brauseri veerised */
+    margin: 0; 
+    
+    /* paneb sisu joonduma ühte tulpa vasakusse reastusse */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    /* lisab vaba ruumi ainult lehe üla-, ala- ja vasakusse äärde */
+    padding: 40px 40px 40px 60px; 
+    
+    /* määrab maksimaalse laiuse, et sisu ei veniks liiga laiaks */
+    max-width: 1200px;
     width: 100%;
-    height: auto;
+    box-sizing: border-box;
+}
+
+
+/* Navigatsiooniriba */
+.navbar {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 15px 24px;
+    margin-bottom: 30px;
+    /* Eemaldame max-content-i ja laseme sel täita kogu lehe laiuse */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Tabel */
+.table {
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-top: 15px;
+    /* Tabel venib täpselt sama laiaks kui navigatsiooniriba */
+    width: 100%;
+}
+
+/* "Create" nupp (eeldades, et sellel on klass .btn-primary) */
+.btn-primary {
+    margin-bottom: 20px;
 }

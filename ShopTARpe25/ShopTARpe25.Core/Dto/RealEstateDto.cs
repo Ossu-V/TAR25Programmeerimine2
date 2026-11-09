@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ShopTARpe25.Core.Dto
 {
-    internal class RealEstateDto
+    public class RealEstateDto
     {
         public Guid? Id { get; set; }
         public double? Area { get; set; }

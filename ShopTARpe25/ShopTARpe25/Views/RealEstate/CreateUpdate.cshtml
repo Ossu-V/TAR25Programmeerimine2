@@ -46,23 +46,6 @@ else
         </div>
     </div>
 
-    See koht on failide üleslaadimise vorm
-    <div class="form-group row">
-        <label asp-for="Files" class="col-sm-2 col-form-label"> </label>
-        <div class="col-sm-5">
-            <input asp-for="Files" class="form-control" type="file" multiple />
-        </div>
-    </div>
-
-    <div>
-        @foreach (var images in Model.Image)
-        {
-            <partial name="_Images" model="images" />
-            <input asp-action="removeImage" asp-controller="RealEstate" asp-route-imageId="@images.ImageId"
-                   type="submit" class="btn btn-danger" value="Remove Image" />
-        }
-    </div>
-
     @if (Model.Id.HasValue)
     {
         <input asp-action="update" asp-controller="RealEstate" type="submit" class="btn btn-success" value="Update" />

@@ -69,14 +69,6 @@ namespace ShopTARpe25.Controllers
                 Address = vm.Address,
                 RoomNumber = vm.RoomNumber,
                 BuildingType = vm.BuildingType,
-                Files = vm.Files,
-                FileToApiDtos = vm.Image
-                    .Select(file => new FileToApiDto
-                    {
-                        Id = file.ImageId,
-                        ExistingFilePath = file.FilePath,
-                        RealEstateId = file.RealEstateId
-                    }).ToArray()
             };
 
             //kutsuda teenuse meetodit, mis salvestab andmed andmebaasi
@@ -107,15 +99,6 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            var images = await _context.FileToApis
-                .Where(x => x.RealEstateId == id)
-                .Select(y => new ImageViewModel
-                {
-                    FilePath = y.ExistingFilePath,
-                    ImageId = y.Id,
-                    RealEstateId = y.RealEstateId
-                }).ToArrayAsync();
-
             //tuleb teha viewModel ja see siin välja kutsuda
             //ära map-ida vm ja domain
 
@@ -128,7 +111,6 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
-            vm.Images.AddRange(images);
 
             return View(vm);
         }
@@ -143,15 +125,6 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            var images = await _context.FileToApis
-                .Where(x => x.RealEstateId == id)
-                .Select(y => new ImageViewModel
-                {
-                    FilePath = y.ExistingFilePath,
-                    ImageId = y.Id,
-                    RealEstateId = y.RealEstateId
-                }).ToArrayAsync();
-
             var vm = new RealEstateCreateUpdateViewModel();
 
             vm.Id = realestate.Id;
@@ -161,7 +134,6 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
-            vm.Image.AddRange(images);
 
             return View("CreateUpdate", vm);
         }
@@ -180,14 +152,6 @@ namespace ShopTARpe25.Controllers
                 BuildingType = vm.BuildingType,
                 CreatedAt = vm.CreatedAt,
                 ModifiedAt = vm.ModifiedAt,
-                Files = vm.Files,
-                FileToApiDtos = vm.Images
-                    .Select(file => new FileToApiDto
-                    {
-                        Id = file.ImageId,
-                        ExistingFilePath = file.FilePath,
-                        RealEstateId = file.RealEstateId
-                    }).ToArray()
             };
 
             var result = await _realEstateService.Update(dto);
@@ -210,15 +174,6 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
-            var images = await _context.FileToApis
-                .Where(x => x.RealEstateId == id)
-                .Select(y => new ImageViewModel
-                {
-                    FilePath = y.ExistingFilePath,
-                    ImageId = y.Id,
-                    RealEstateId = y.RealEstateId
-                }).ToArrayAsync();
-
             var vm = new RealEstateDeleteViewModel();
 
             vm.Id = realestate.Id;
@@ -228,7 +183,6 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
-            vm.Images.AddRange(images);
 
             return View(vm);
 
@@ -240,26 +194,6 @@ namespace ShopTARpe25.Controllers
             var result = await _realEstateService.Delete(id);
 
             if (result == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> RemoveImage(ImageViewModel vm)
-        {
-            //tuleb ühendada dto ja viewModel, et saaks kasutada teenuse meetodit
-            var dto = new FileToApiDto()
-            {
-                Id = vm.ImageId
-            };
-
-            //kutsuda teenuse meetodit, mis kustutab pildid andmebaasist
-            var image = await _fileService.RemoveImageFromApi(dto);
-
-            if (image == null)
             {
                 return RedirectToAction(nameof(Index));
             }

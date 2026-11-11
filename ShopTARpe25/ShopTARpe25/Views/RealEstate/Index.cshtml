@@ -24,19 +24,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var spaceship in Model)
+            @foreach (var realestate in Model)
             {
                 <tr>
                     <td>@rowNumber</td>
-                    <td>@spaceship.Area</td>
-                    <td>@spaceship.Address</td>
-                    <td>@spaceship.RoomNumber</td>
-                    <td>@spaceship.BuildingType</td>
+                    <td>@realestate.Area</td>
+                    <td>@realestate.Address</td>
+                    <td>@realestate.RoomNumber</td>
+                    <td>@realestate.BuildingType</td>
                     <td>
-                        <a asp-action="Details" asp-controller="Spaceship" asp-route-id="@spaceship.Id" type="submit" class="btn btn-info">Details</a>
-                        <a asp-action="Update" asp-controller="Spaceship" asp-route-id="@spaceship.Id" type="submit" class="btn btn-success">Update</a>
-                        <a asp-action="Delete" asp-controller="Spaceship" asp-route-id="@spaceship.Id" type="submit" class="btn btn-danger">Delete</a>
+                        <a asp-action="details" asp-controller="RealEstate" asp-route-id="@realestate.Id" class="btn btn-info">Details</a>
+                        <a asp-action="update" asp-controller="RealEstate" asp-route-id="@realestate.Id" class="btn btn-success">Update</a>
+                        <a asp-action="delete" asp-controller="RealEstate" asp-route-id="@realestate.Id" class="btn btn-danger">Delete</a>
                     </td>
+
                 </tr>
                 rowNumber++;
             }

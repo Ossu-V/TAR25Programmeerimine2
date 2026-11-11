@@ -3,7 +3,7 @@ using ShopTARpe25.Core.Dto;
 using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
 using ShopTARpe25.Models.RealEstate;
-using ShopTARpe25.Models.Spaceship;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShopTARpe25.Controllers
 {
@@ -23,7 +23,7 @@ namespace ShopTARpe25.Controllers
                 IFileServices fileService
             )
         {
-            _realEstateService = _realEstateService;
+            _realEstateService = realEstateService;
             _context = context;
             _fileService = fileService;
         }

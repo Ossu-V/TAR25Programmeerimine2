@@ -23,4 +23,8 @@
     <ProjectReference Include="..\ShopTARpe25.Core\ShopTARpe25.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

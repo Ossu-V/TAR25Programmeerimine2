@@ -110,6 +110,8 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
+            RealEstateImageViewModel[] images = await FileFromDatabase(id);
+
             //tuleb teha viewModel ja see siin välja kutsuda
             //ära map-ida vm ja domain
 
@@ -210,6 +212,22 @@ namespace ShopTARpe25.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<RealEstateImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            var result = await _context.FileToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new RealEstateImageViewModel
+                {
+                    ImageId = y.Id,
+                    RealEstateId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
+            return result;
         }
     }
 }

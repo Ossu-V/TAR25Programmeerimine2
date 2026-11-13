@@ -66,6 +66,7 @@ namespace ShopTARpe25.ApplicationServices.Services
             }
         }
 
+
         public async Task<FileToApi> RemoveImageFromApi(FileToApiDto dto)
         {
             //kui on vaja kustutada fail, siis tuleb see üles leida

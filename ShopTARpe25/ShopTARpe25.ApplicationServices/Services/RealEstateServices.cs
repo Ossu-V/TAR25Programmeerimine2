@@ -37,7 +37,7 @@ namespace ShopTARpe25.ApplicationServices.Services
             
             if (dto.Files != null)
             {
-                _fileServices.FilesToDatabase(dto, domain);
+                _fileServices.UploadFilesToDatabase(dto, domain);
             }
 
 

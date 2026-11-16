@@ -51,12 +51,12 @@ else
         <input class="form-control"  asp-for="Files" multiple type="file" />
     </div>
 
-    <div>
+    <dl>
         @foreach (var images in Model.Image)
         {
             <partial name="_Images" model="images" />
         }
-    </div>
+    </dl>
 
     @if (Model.Id.HasValue)
     {

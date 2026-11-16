@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShopTARpe25.Core.Dto;
 using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
 using ShopTARpe25.Models.RealEstate;
-using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ShopTARpe25.Controllers
 {
@@ -112,9 +113,7 @@ namespace ShopTARpe25.Controllers
 
             RealEstateImageViewModel[] images = await FileFromDatabase(id);
 
-            //tuleb teha viewModel ja see siin välja kutsuda
-            //ära map-ida vm ja domain
-
+            //siin toimub info edasi liikumine dto-st viewModelini
             var vm = new RealEstateDetailsViewModel();
 
             vm.Id = realestate.Id;
@@ -124,6 +123,7 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
+            vm.Images.AddRange(images);
 
             return View(vm);
         }
@@ -138,6 +138,8 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
+            RealEstateImageViewModel[] images = await FileFromDatabase(id);
+
             var vm = new RealEstateCreateUpdateViewModel();
 
             vm.Id = realestate.Id;
@@ -147,6 +149,8 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
+            vm.Image.AddRange(images);
+
 
             return View("CreateUpdate", vm);
         }
@@ -187,6 +191,8 @@ namespace ShopTARpe25.Controllers
                 return NotFound();
             }
 
+            RealEstateImageViewModel[] images = await FileFromDatabase(id);
+
             var vm = new RealEstateDeleteViewModel();
 
             vm.Id = realestate.Id;
@@ -196,6 +202,7 @@ namespace ShopTARpe25.Controllers
             vm.BuildingType = realestate.BuildingType;
             vm.CreatedAt = realestate.CreatedAt;
             vm.ModifiedAt = realestate.ModifiedAt;
+            vm.Images.AddRange(images);
 
             return View(vm);
 
@@ -224,6 +231,7 @@ namespace ShopTARpe25.Controllers
                     RealEstateId = y.Id,
                     ImageData = y.ImageData,
                     ImageTitle = y.ImageTitle,
+                    //string.Format tähendab, et see muudab string andmetüübiks 
                     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
                 }).ToArrayAsync();
 

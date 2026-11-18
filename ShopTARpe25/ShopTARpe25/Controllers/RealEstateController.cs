@@ -4,7 +4,7 @@ using ShopTARpe25.Core.Dto;
 using ShopTARpe25.Core.ServiceInterface;
 using ShopTARpe25.Data;
 using ShopTARpe25.Models.RealEstate;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace ShopTARpe25.Controllers
 {
@@ -78,9 +78,8 @@ namespace ShopTARpe25.Controllers
                         ImageData = x.ImageData,
                         ImageTitle = x.ImageTitle,
                         RealEstateId = x.RealEstateId
-
                     }).ToArray()
-                
+
             };
 
             //kutsuda teenuse meetodit, mis salvestab andmed andmebaasi
@@ -236,6 +235,26 @@ namespace ShopTARpe25.Controllers
                 }).ToArrayAsync();
 
             return result;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(RealEstateImageViewModel vm)
+        {
+            var dto = new FileToDatabaseDto()
+            {
+                Id = vm.ImageId
+            };
+
+            var image = await _fileService.RemoveImageFromDatabase(dto);
+
+            var realEstateId = image.RealEstateId;
+
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

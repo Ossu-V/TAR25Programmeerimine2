@@ -67,6 +67,11 @@ namespace ShopTARpe25.ApplicationServices.Services
             realestate.CreatedAt = dto.CreatedAt;
             realestate.ModifiedAt = DateTime.Now;
 
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realestate);
+            }
+
             _context.RealEstates.Update(realestate);
             await _context.SaveChangesAsync();
 

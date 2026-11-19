@@ -93,7 +93,7 @@ namespace ShopTARpe25.ApplicationServices.Services
             foreach (var image in dto)
             {
                 var imageId = await _context.FileToApis
-    .               FirstOrDefaultAsync(x => x.Id == image.Id);
+                        .FirstOrDefaultAsync(x => x.Id == image.Id);
 
                 var filePath = _webHost.ContentRootPath + "\\wwwroot\\multipleFileUpload\\"
                     + imageId.ExistingFilePath;
@@ -146,6 +146,22 @@ namespace ShopTARpe25.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return image;
+        }
+
+        //kui kustutatud mitu pilti, siis peab olema massiivis e []
+        public async Task<FileToDatabase> RemoveImagesFromDatabase(FileToDatabaseDto[] dtos)
+        {
+            foreach (var dto in dtos)
+            {
+                var image = await _context.FileToDatabases
+                    .Where(x => x.Id == dto.Id)
+                    .FirstOrDefaultAsync(x => x.Id == dto.Id);
+
+                _context.FileToDatabases.Remove(image);
+                await _context.SaveChangesAsync();
+
+            }
+            return null;
         }
     }
 }

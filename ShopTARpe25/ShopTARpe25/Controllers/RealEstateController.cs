@@ -14,9 +14,6 @@ namespace ShopTARpe25.Controllers
         private readonly ShopTARpe25Context _context;
         private readonly IFileServices _fileService;
 
-        //teha constructor et saaks kasutada teenust, mis on
-        //defineeritud ISpaceshipServices liideses
-        //lisage Context
         public RealEstateController
             (
                 IRealEstateServices realEstateService,
